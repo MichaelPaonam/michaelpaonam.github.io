@@ -1,1 +1,1 @@
-This is repo for the github page -> michaelpaonam.github.io
+This repo is used to host my portfolio website [michaelpaonam.com](https://michaelpaonam.com)
