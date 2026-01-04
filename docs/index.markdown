@@ -5,17 +5,13 @@
 layout: home
 ---
 
-This is just a test web page.
+Hi There! I am Michael.
 
-## Welcome to the Test Jekyll Site!
+## Welcome to my Personal Website
 
-Explore the features of Jekyll and learn how to customize your static site.  
-Here are some things you can try:
+This website started as a personal experiment to try out github pages and a cheap domain from [Namecheap](namecheap.com).
+I'll be adding more content soon to showcase my skills and personal portfolio. This website ultimately aims to serve as my web CV.
 
-- Edit this page to add your own content.
-- Change the layout by modifying the theme.
-- Add new posts or pages to expand your site.
+## More to come. Thank you for being here.
 
-> "Jekyll makes building static sites simple and fun!"
-
-Feel free to experiment and make this site your own.
+> "It is not enough to know, we must also apply; it is not enough to will, we must also do. - Goethe"
