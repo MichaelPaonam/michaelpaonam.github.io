@@ -4,7 +4,7 @@
 
 layout: home
 ---
-Hi There! I am Michael.
+Hi There!
 
 ## Welcome to my Personal Website
 
