@@ -4,18 +4,16 @@
 
 layout: home
 ---
+Hi There! I am Michael.
 
-This is just a test web page.
+## Welcome to my Personal Website
 
-## Welcome to the Test Jekyll Site!
+My name is Michael Paonam. I am currently working as a Backend Engineer at SAP, and actively involved with DevOps related tasks. This website started as a personal experiment to try out github pages and a cheap domain from [Namecheap](https://namecheap.com).
 
-Explore the features of Jekyll and learn how to customize your static site.  
-Here are some things you can try:
+I'll be adding more content soon to showcase my skills and personal portfolio. This website ultimately aims to serve as my web CV.
 
-- Edit this page to add your own content.
-- Change the layout by modifying the theme.
-- Add new posts or pages to expand your site.
+![image from undraw](/assets/images/work.png)
 
-> "Jekyll makes building static sites simple and fun!"
+## More to come. Thank you for being here.
 
-Feel free to experiment and make this site your own.
+> "It is not enough to know, we must also apply; it is not enough to will, we must also do. - Goethe"
