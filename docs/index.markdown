@@ -9,7 +9,8 @@ Hi There! I am Michael.
 
 ## Welcome to my Personal Website
 
-This website started as a personal experiment to try out github pages and a cheap domain from [Namecheap](namecheap.com).
+My name is Michael Paonam. I am currently working as a Backend Engineer, and actively involved with DevOps related tasks. This website started as a personal experiment to try out github pages and a cheap domain from [Namecheap](namecheap.com).
+
 I'll be adding more content soon to showcase my skills and personal portfolio. This website ultimately aims to serve as my web CV.
 
 ## More to come. Thank you for being here.
