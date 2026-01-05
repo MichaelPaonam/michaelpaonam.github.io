@@ -4,14 +4,15 @@
 
 layout: home
 ---
-
-Hi There! I am Michael.
+Hi There!
 
 ## Welcome to my Personal Website
 
-My name is Michael Paonam. I am currently working as a Backend Engineer, and actively involved with DevOps related tasks. This website started as a personal experiment to try out github pages and a cheap domain from [Namecheap](namecheap.com).
+My name is Michael Paonam. I am currently working as a Backend Engineer at SAP, and actively involved with DevOps related tasks. This website started as a personal experiment to try out github pages and a cheap domain from [Namecheap](https://namecheap.com).
 
 I'll be adding more content soon to showcase my skills and personal portfolio. This website ultimately aims to serve as my web CV.
+
+![image from undraw](/assets/images/work.png)
 
 ## More to come. Thank you for being here.
 
