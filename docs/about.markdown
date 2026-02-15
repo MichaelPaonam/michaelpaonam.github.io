@@ -4,4 +4,5 @@ title: About
 permalink: /about/
 ---
 
-This is the personal website of Michael Paonam. More content will be available soon.
+This site is a technical notebook — not a marketing page.  
+Everything here comes from real problems I encountered while building software.

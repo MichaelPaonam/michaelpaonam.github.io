@@ -4,13 +4,12 @@
 
 layout: home
 ---
-Hi There!
+Hi, I'm Michael Paonam
 
-## Welcome to my Personal Website
+## Senior Software Engineer @ SAP Signavio 
+### Backend Systems • Distributed Services • Developer Tooling  
 
-My name is Michael Paonam. I am currently working as a Backend Engineer at SAP, and actively involved with DevOps related tasks. This website started as a personal experiment to try out github pages and a cheap domain from [Namecheap](https://namecheap.com).
-
-I'll be adding more content soon to showcase my skills and personal portfolio. This website ultimately aims to serve as my web CV.
+I build reliable software systems and internal platforms that improve engineering productivity and operational visibility.
 
 ![image from undraw](/assets/images/work.png)
 
