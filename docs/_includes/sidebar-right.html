@@ -1,0 +1,10 @@
+<aside class="site-sidebar-right" role="complementary">
+  <div class="site-sidebar-right-inner">
+    <h2 class="sidebar-title">Posts</h2>
+    <ul class="sidebar-posts">
+      {% for post in site.posts %}
+      <li class="sidebar-post"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+</aside>

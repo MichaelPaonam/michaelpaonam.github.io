@@ -1,0 +1,84 @@
+---
+# Only the main Sass file needs front matter (the dashes are enough)
+---
+
+@import "minima";
+/* Grid layout: left | center (max width) | right */
+.page-wrapper {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 860px) 280px;
+  justify-content: center; /* keeps main centered */
+  gap: 1.5rem;
+  align-items: start;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.site-sidebar-left {
+  padding: 1rem;
+  border-right: 1px solid var(--color-muted);
+  background: var(--color-background);
+  width: 240px;
+  box-sizing: border-box;
+}
+
+.site-sidebar-right {
+  /* right sidebar */
+  padding: 1rem;
+  border-left: 1px solid var(--color-muted);
+  background: var(--color-background);
+  width: 280px;
+  box-sizing: border-box;
+}
+
+.site-main,
+.page-content {
+  min-width: 0; /* allow content to wrap instead of forcing overflow */
+  padding: 1.5rem 0;
+  box-sizing: border-box;
+}
+
+.inline-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin-left: 0;
+}
+
+.inline-list li {
+  display: inline;
+  margin-right: 12px;
+}
+
+.inline-list li::after {
+  content: "·";
+  margin-left: 12px;
+}
+
+.inline-list li:last-child::after {
+  content: "";
+}
+
+/* Responsive: stack vertically on small screens */
+@media (max-width: 768px) {
+  .page-wrapper {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .site-sidebar-left,
+  .site-sidebar-right {
+    width: auto;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid var(--color-muted);
+    padding: 1rem 0.75rem;
+  }
+
+  .site-main,
+  .page-content {
+    padding: 1rem 0.75rem;
+  }
+}
