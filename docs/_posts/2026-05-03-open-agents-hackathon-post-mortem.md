@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "ETHGlobal Open Agents: What the Winners Did Differently"
-date: 2026-05-07
+date: 2026-05-03
 categories: web3
 ---
 

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "G-Hook: Gamedevjs 2026 Post-Mortem"
-date: 2026-05-07
+date: 2026-04-26
 categories: gamedev
 ---
 
