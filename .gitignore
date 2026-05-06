@@ -21,3 +21,5 @@ docs/Gemfile.lock
 
 # Claude Code
 .claude/
+!.claude/skills/
+!.claude/settings.json
