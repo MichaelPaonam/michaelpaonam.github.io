@@ -18,7 +18,7 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: Michael Paonam — Backend & Systems Engineer
+title: Michael Paonam — Software Engineer
 email: michael.paonam@yahoo.com
 description: >- # this means to ignore newlines until "baseurl:"
   Senior Software Engineer writing about backend architecture, debugging production systems, and building reliable software.
