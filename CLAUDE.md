@@ -42,3 +42,26 @@ Note: Changes to `_config.yml` require restarting the server.
 - `docs/_includes/sidebar-left.html` — Left navigation/profile panel
 - `docs/_includes/sidebar-right.html` — Right panel content
 - `docs/assets/main.scss` — All custom CSS (grid layout, responsive breakpoints at 768px, color variables)
+
+## Behavioral Guidelines
+
+### Think Before Acting
+- Don't assume context — if the request is ambiguous, ask.
+- If a simpler approach exists, suggest it before implementing the complex one.
+- For multi-step tasks, state a brief plan before executing.
+
+### Simplicity First
+- Minimum code/markup that solves the problem.
+- No speculative features or abstractions for single-use code.
+- No "flexibility" that wasn't requested.
+
+### Surgical Changes
+- Touch only what the task requires. Don't "improve" adjacent code, styles, or content.
+- Match existing patterns and style conventions.
+- Every changed line should trace directly to the user's request.
+
+### Content Standards
+- Posts are technical content for backend/systems engineers. Direct, practical tone.
+- Code examples must be realistic — prefer Java/Spring Boot for backend snippets.
+- Never invent fake metrics, team names, or company details.
+- No dramatic storytelling or marketing language.
