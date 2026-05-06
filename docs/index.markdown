@@ -7,7 +7,7 @@ layout: home
 Hi, I'm Michael Paonam
 
 ## Senior Software Engineer @ SAP Signavio 
-### Backend Systems • Distributed Services • Developer Tooling  
+### Java • Distributed Systems • Cloud-Native  
 
 I build reliable software systems and internal platforms that improve engineering productivity and operational visibility.
 

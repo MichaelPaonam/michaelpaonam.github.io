@@ -1,0 +1,23 @@
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Jekyll (covered in docs/.gitignore but also at root)
+docs/_site/
+docs/.sass-cache/
+docs/.jekyll-cache/
+docs/.jekyll-metadata
+docs/vendor/
+
+# Ruby
+.ruby-version
+docs/Gemfile.lock
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Claude Code
+.claude/
