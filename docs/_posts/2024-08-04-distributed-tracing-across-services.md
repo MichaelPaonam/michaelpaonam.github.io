@@ -5,21 +5,21 @@ date: 2024-08-04
 categories: observability
 ---
 
-When you have five or six services talking over HTTP and Kafka, the hardest question during an incident isn't "what broke?" — it's "what touched this request?" Logs exist per service. Metrics exist per host. But nothing ties them together unless you explicitly build that connective tissue.
+We had six services talking over HTTP and Kafka, and during incidents the hardest question was never "what broke?" — it was "what touched this request?" Logs existed per service. Metrics existed per host. Nothing tied them together. An incident that should have taken five minutes to resolve would burn an hour of manual log correlation.
 
-This post covers how we set up distributed tracing: correlation IDs, OpenTelemetry instrumentation, and structured logging that actually lets you follow a transaction end-to-end.
+This post covers how we wired up distributed tracing: correlation IDs first, then OpenTelemetry, then structured logging that actually made the whole thing queryable.
 
 ## The problem
 
 ![image from undraw](/assets/images/alert.jpg)
 
-A user places an order. That request hits an API gateway, fans out to an inventory service, a payment service, a notification service, and eventually writes to a ledger via Kafka. Each service logs independently. When something goes wrong — say a 12-second checkout — you're searching five different log streams by timestamp, hoping the clocks are synced and the log formats are consistent enough to correlate manually.
+A user places an order. The request hits an API gateway, fans out to an inventory service, a payment service, a notification service, and eventually writes to a ledger via Kafka. Each service logs independently. When checkout latency spikes to 12 seconds, you're searching five different log streams by timestamp, hoping the clocks are synced and the log formats are consistent enough to piece together what happened.
 
-This doesn't scale. You need a shared identifier that travels with the request.
+We tried this for three months. The worst incident took 45 minutes to resolve — not because the fix was hard, but because finding the slow service required manually jumping between Kibana indices and guessing at timing overlaps.
 
-## Correlation IDs
+## Correlation IDs: the quick win
 
-The simplest starting point: generate a unique ID at the edge and propagate it through every service that handles the request.
+Before going full OpenTelemetry, we started with the simplest possible thing: a UUID generated at the edge, propagated everywhere.
 
 **At the gateway (Spring Boot filter):**
 
@@ -46,16 +46,16 @@ public class CorrelationIdFilter extends OncePerRequestFilter {
 }
 ```
 
-**Propagation rules:**
-- HTTP calls: pass as `X-Correlation-ID` header
-- Kafka messages: set in message headers (not the payload)
-- Async workers: extract from the message metadata before processing
+**Propagation rules we settled on:**
+- HTTP calls: pass as `X-Correlation-ID` header (added to our shared RestTemplate config)
+- Kafka messages: set in record headers, not the payload (avoids schema changes)
+- Async workers: extract from message metadata before processing, put in MDC
 
-Every log line includes this ID. That alone gets you from "search by timestamp" to "search by transaction."
+This alone cut our mean-time-to-identify from ~30 minutes to ~8 minutes. One search by correlation ID across all indices would surface every log line for a transaction. The limitation: no timing information, no parent-child relationships, no visualization.
 
-## OpenTelemetry
+## OpenTelemetry: when correlation IDs aren't enough
 
-Correlation IDs solve log correlation, but they don't give you timing, causality, or a visual trace. OpenTelemetry gives you spans — units of work with start/end times, parent-child relationships, and attributes.
+We evaluated three options: Zipkin (lighter, less active development), Jaeger (mature, but self-hosted complexity), and OpenTelemetry with a managed backend. We went with OTel exporting to Grafana Tempo — mainly because we already had Grafana for metrics and didn't want another UI.
 
 **Basic setup (Spring Boot with OTel SDK):**
 
@@ -108,13 +108,15 @@ public class PaymentService {
 }
 ```
 
-**Context propagation** is handled by W3C Trace Context headers (`traceparent`, `tracestate`). Most HTTP client libraries have OTel instrumentation packages that inject these automatically. For Kafka, you propagate the trace context in message headers and extract it on the consumer side.
+**Context propagation** is handled by W3C Trace Context headers (`traceparent`, `tracestate`). The OTel Java agent auto-instruments most HTTP clients and Kafka producers/consumers, so we only wrote manual spans for business-critical paths where we wanted custom attributes.
 
-The key architectural decision: instrument at service boundaries (incoming request, outgoing call, message publish, message consume). You don't need to instrument every function — just the points where execution crosses a network boundary.
+The trade-off we hit: the OTel Java agent adds ~50ms to startup and a small per-request overhead (~2ms in our measurements). For our latency budget this was fine. We considered the manual SDK-only approach (no agent) but decided the auto-instrumentation coverage was worth the overhead.
+
+**Where we drew the line:** instrument at service boundaries only — incoming request, outgoing HTTP call, message publish, message consume. We explicitly decided not to instrument internal method calls. The signal-to-noise ratio drops fast when you trace everything.
 
 ## Structured logging
 
-Unstructured logs (`INFO: payment processed for order 18473`) are human-readable but machine-hostile. Structured logs let you filter and aggregate:
+We had structured logging before tracing, but it wasn't connected. The missing piece was injecting trace context into every log line automatically.
 
 ```json
 {
@@ -131,9 +133,9 @@ Unstructured logs (`INFO: payment processed for order 18473`) are human-readable
 }
 ```
 
-The trace ID and span ID come from the active OpenTelemetry context. The correlation ID is your business-level identifier. Having both means you can query from either direction: start from the trace (infrastructure view) or start from the order (business view).
+We kept both the correlation ID (business identifier — the order ID) and the trace ID (infrastructure identifier). This lets you query from either direction: "show me everything for order 18473" or "show me everything in this trace." Different people ask different questions — support engineers think in orders, on-call engineers think in traces.
 
-**Implementation pattern (Logback with MDC):**
+**Implementation (Logback with MDC):**
 
 ```xml
 <!-- logback-spring.xml -->
@@ -165,10 +167,14 @@ public class TraceContextLogger implements HandlerInterceptor {
 }
 ```
 
-## What changes operationally
+## What actually changed
 
-Before: an alert fires for high checkout latency. You open Grafana, confirm it's not CPU or memory, then start grepping logs across services by timestamp. You find the slow service after 20 minutes of manual correlation.
+The first incident after full rollout: alert fires for checkout latency at 2 AM. The alert itself now includes a trace ID (we configured AlertManager to attach it from the exemplar). Open Tempo, paste the trace ID, see the full waterfall. A downstream ledger service is taking 8 seconds on a database query — connection pool exhausted because a batch job was running during peak hours. Four minutes from alert to root cause.
 
-After: the alert includes a trace ID. You open Jaeger or Tempo, paste the trace ID, and see the full request waterfall — which services were called, in what order, and where the time was spent. A downstream ledger service took 8 seconds on a database query. Incident resolved in minutes, not hours.
+Before tracing, that same incident pattern took 30-45 minutes. The fix was always simple once you found the slow service. The cost was in the finding.
 
-The investment is real — instrumenting services, agreeing on propagation conventions, setting up a trace collector and backend. But the payoff compounds with every incident, every support ticket, and every "what happened to order X?" question that used to take an hour to answer.
+The less obvious win: support tickets. "What happened to order #18473?" used to mean 20 minutes of log archaeology. Now it's one search. We built a small internal tool that takes an order ID, finds the correlation ID, pulls the trace, and renders the timeline. Support engineers use it directly without paging on-call.
+
+**What I'd skip if doing it again:** we spent two weeks building custom dashboards for trace metrics (p99 per service, error rates by span). Grafana Tempo's built-in service graph and RED metrics dashboard gave us 90% of that for free. Should have started there.
+
+**What I wouldn't skip:** keeping the correlation ID separate from the trace ID. Some teams just use the trace ID for everything. But traces are infrastructure-scoped — they break across async boundaries, batch jobs, retry queues. The business correlation ID survives all of that because it's just a string you propagate manually. When the Kafka consumer picks up a failed message three hours later, the trace is new but the correlation ID is the same.

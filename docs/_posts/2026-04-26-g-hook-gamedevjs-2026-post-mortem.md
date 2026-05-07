@@ -42,8 +42,6 @@ This gave me full control over the feel without fighting Box2D's joint solver in
 
 ## What went right
 
-**Claude Code as a co-pilot.** I used Claude Code from the very first commit. The initial prompt was literally "I'm joining a game jam, I need grappling hook mechanics similar to Fanny, Defold, HTML5, 2D top-down — how do I approach this?" Having an AI that could reason about Box2D constraints, Defold's message-passing architecture, and Lua idioms saved hours of docs-diving. It wrote the first draft of the player script, the render pipeline, and the screen-to-world coordinate conversion.
-
 **Choosing Defold.** The engine's collection proxy system made level loading trivial — each level is a self-contained `.collection` file, loaded/unloaded by a central loader script. The HTML5 build pipeline (via `bob.jar`) just works. Zero-gravity was a single line in `game.project`:
 
 ```ini
@@ -77,7 +75,6 @@ gravity_x = 0.0
 ## Tools and workflow
 
 - **Defold Editor** for scene composition, tilemap painting, and builds.
-- **Claude Code** for all script writing and debugging, running from the project root.
 - **Git + GitHub** with feature branches for major additions (controls rework, level one, assets).
 - **`build.sh`** wrapping `bob.jar` for HTML5 bundling — avoids the Defold Editor's bundle GUI.
 - **Python HTTP server** for local testing (WASM requires HTTP, not `file://`).
