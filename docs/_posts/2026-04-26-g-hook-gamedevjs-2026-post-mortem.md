@@ -9,7 +9,13 @@ I built a 2D top-down grappling hook time-trial game in 10 days for the Gamedevj
 
 This is what went right, what went wrong, and what I'd do differently.
 
+<div class="iframe-container iframe-container--game">
 <iframe frameborder="0" src="https://itch.io/embed-upload/17312646?color=333333" allowfullscreen="" width="800" height="550"><a href="https://0xpaona.itch.io/g-hook">Play G-hook on itch.io</a></iframe>
+</div>
+<div class="mobile-fallback">
+<p>This game requires a keyboard and mouse to play.</p>
+<a href="https://0xpaona.itch.io/g-hook">Play G-hook on itch.io (desktop)</a>
+</div>
 
 ## Timeline
 

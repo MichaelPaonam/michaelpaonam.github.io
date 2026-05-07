@@ -82,3 +82,49 @@
     padding: 1rem 0.75rem;
   }
 }
+
+/* Responsive iframes */
+.iframe-container {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  overflow: hidden;
+}
+
+.iframe-container iframe {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+}
+
+.iframe-container--game iframe {
+  aspect-ratio: 800 / 550;
+}
+
+.mobile-fallback {
+  display: none;
+  padding: 1.5rem;
+  background: #1a1a1a;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.mobile-fallback a {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: #333;
+  color: #fff;
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .iframe-container--game {
+    display: none;
+  }
+
+  .mobile-fallback {
+    display: block;
+  }
+}

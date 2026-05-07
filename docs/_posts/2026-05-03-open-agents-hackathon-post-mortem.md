@@ -7,7 +7,9 @@ categories: web3
 
 I spent 14 days building ARYA — a multi-agent AI swarm for DeFi yield farming — for the ETHGlobal Open Agents hackathon. It didn't place. Here's what I built, what the finalists built, and where I think the gap was.
 
-<iframe width="800" height="390" src="https://www.youtube.com/embed/9g2LWZVdooE?si=RHB4PdAAZUCgaSM7" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<div class="iframe-container">
+<iframe src="https://www.youtube.com/embed/9g2LWZVdooE?si=RHB4PdAAZUCgaSM7" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
 
 ## What I built
 
