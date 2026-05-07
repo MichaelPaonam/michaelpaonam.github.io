@@ -24,3 +24,6 @@ docs/Gemfile.lock
 !.claude/skills/
 !.claude/rules.md
 !.claude/settings.json
+
+# Personal notes (not published)
+skill-roadmap.md
