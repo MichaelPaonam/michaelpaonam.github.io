@@ -7,6 +7,8 @@ categories: ai
 
 Most RAG tutorials stop at "retrieve documents, pass to LLM, return answer." That's about 20% of what a production deployment actually requires. The remaining 80% is concurrency control, adaptive retrieval, structured citations, and graceful degradation when your upstream services throttle you.
 
+![RAG project - System Design](/assets/images/rag_system_design.svg)
+
 I built this for an internal documentation assistant — engineers asking questions about proprietary system docs that couldn't be indexed by public LLMs. The corpus was ~2,000 pages of technical documentation across PDFs, markdown, and HTML. Traffic was modest (a few hundred queries per day) but bursty — entire teams would hit it during incidents, which is exactly when you can't afford it to fall over.
 
 The stack: FastAPI, a columnar database with vector search capabilities, an embedding model behind an API gateway, and an LLM for generation. Everything async, everything behind rate limits.
